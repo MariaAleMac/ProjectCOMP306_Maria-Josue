@@ -31,7 +31,6 @@ public partial class Comp306ProjectContext : DbContext
     {
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasNoKey();
 
             entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.Role).HasMaxLength(50);
@@ -40,7 +39,6 @@ public partial class Comp306ProjectContext : DbContext
 
         modelBuilder.Entity<Veterinarian>(entity =>
         {
-            entity.HasNoKey();
 
             entity.Property(e => e.Address).HasMaxLength(50);
             entity.Property(e => e.City).HasMaxLength(50);
@@ -51,20 +49,17 @@ public partial class Comp306ProjectContext : DbContext
 
         modelBuilder.Entity<Doctor>(entity =>
         {
-            entity.HasNoKey();
 
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.Lastname).HasMaxLength(50);
             entity.Property(e => e.Gender).HasMaxLength(50);
             entity.Property(e => e.Price).HasMaxLength(50);
-            entity.Property(e => e.VeterinarianId).HasMaxLength(50);
+            entity.Property(e => e.VeterianId).HasMaxLength(50);
             entity.Property(e => e.SpecialtyId).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Pet>(entity =>
         {
-            entity.HasNoKey();
-
             entity.Property(e => e.Type).HasMaxLength(50);
         });
 

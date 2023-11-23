@@ -10,6 +10,8 @@ namespace VeterinariansAPI.Mappings
             CreateMap<Veterinarian, VeterinarianDTO>();
             CreateMap<Doctor, DoctorDTO>();
             CreateMap<Pet, PetDTO>();
+            CreateMap<Specialty, SpecialtyDTO>();
         }
+
     }
 }

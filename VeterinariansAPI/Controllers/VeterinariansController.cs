@@ -31,77 +31,51 @@ namespace VeterinariansAPI.Controllers
             return Ok(results);
         }
 
-        //// GET: VeterinariansController/Details/5
-        //[HttpGet]
-        //[Route("/api/Veterinarians/:id")]
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
+        // GET: VeterinariansController/Details/5
+        [HttpGet]
+        [Route("/api/Veterinarian/{id}")]
+        public async Task<ActionResult<VeterinarianWithDoctorsDTO>> Details(int id)
+        {
+            var veterinarians = await _veterinariansRepository.GetVeterinarianById(id);
+            var results = _mapper.Map<VeterinarianWithDoctorsDTO>(veterinarians);
+            return Ok(results);
+        }
 
-        //// GET: VeterinariansController/Create
-        //[HttpGet]
-        //[Route("/api/AllVeterinarians")]
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        // POST: VeterinariansController/Create
+        [HttpPost]
+        [Route("/api/Veterinarian")]
+        public ActionResult Create(Veterinarian veterinarian)
+        {
+            _veterinariansRepository.CreateVeterinarian(veterinarian);
+            return Ok();   
+        }
 
-        //// POST: VeterinariansController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        // PUT: VeterinariansController/Update
+        [HttpPut]
+        [Route("/api/Veterinarian")]
+        public ActionResult Update(Veterinarian veterinarian)
+        {
+            _veterinariansRepository.UpdateVeterinarian(veterinarian);
+            return Ok();
+        }
 
-        //// GET: VeterinariansController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        // DELETE: VeterinariansController/Delete/:id
+        [HttpDelete]
+        [Route("/api/Veterinarian/{id}")]
+        public async Task<ActionResult> Remove(int id)
+        {
+            await _veterinariansRepository.RemoveVeterinarian(id);
+            return Ok();
+        }
 
-        //// POST: VeterinariansController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: VeterinariansController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: VeterinariansController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        // GET: Veterinarians
+        [HttpGet]
+        [Route("/api/Veterinarians/Search/{searchFilter}")]
+        public async Task<ActionResult<VeterinarianWithDoctorsDTO>> GetVeterinariansBySearchFilter(string searchFilter)
+        {
+            var veterinarians = await _veterinariansRepository.GetVeterinariansBySearchFilter(searchFilter);
+            var results = _mapper.Map<IEnumerable<VeterinarianWithDoctorsDTO>>(veterinarians);
+            return Ok(results);
+        }
     }
 }
