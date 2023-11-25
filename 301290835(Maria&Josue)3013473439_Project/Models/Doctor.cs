@@ -19,9 +19,9 @@ public partial class Doctor
 
     public int? VeterianId { get; set; }
 
-    public float? Price { get; set; }
+    public int? Price { get; set; }
 
-    public int? SpecialtyId { get; set; }
+    public string? SpecialtyId { get; set; }
 
     public string? SpecialtyDesc { get; set; }
 
