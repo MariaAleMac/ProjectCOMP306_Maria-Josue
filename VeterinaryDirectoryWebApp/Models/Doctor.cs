@@ -1,14 +1,14 @@
-﻿using _301290835_Maria_Josue_3013473439_Project.Models;
-using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace VeterinariansAPI.DTO
+namespace VeterinaryDirectoryWebApp.Models
 {
 
-
-    public class DoctorDTO
+    public partial class Doctor
     {
-
-
         public int Id { get; set; }
 
         public string? Name { get; set; }

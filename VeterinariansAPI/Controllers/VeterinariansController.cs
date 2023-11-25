@@ -44,7 +44,7 @@ namespace VeterinariansAPI.Controllers
         // POST: VeterinariansController/Create
         [HttpPost]
         [Route("/api/Veterinarian")]
-        public ActionResult Create(Veterinarian veterinarian)
+        public ActionResult Create([FromBody]Veterinarian veterinarian)
         {
             _veterinariansRepository.CreateVeterinarian(veterinarian);
             return Ok();   
@@ -53,7 +53,7 @@ namespace VeterinariansAPI.Controllers
         // PUT: VeterinariansController/Update
         [HttpPut]
         [Route("/api/Veterinarian")]
-        public ActionResult Update(Veterinarian veterinarian)
+        public ActionResult Update([FromBody] Veterinarian veterinarian)
         {
             _veterinariansRepository.UpdateVeterinarian(veterinarian);
             return Ok();

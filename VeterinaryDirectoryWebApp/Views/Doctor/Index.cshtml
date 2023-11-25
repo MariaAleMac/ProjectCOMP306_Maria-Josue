@@ -1,0 +1,94 @@
+﻿@model IEnumerable<VeterinaryDirectoryWebApp.Models.DoctorViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust the minimum width as needed */
+        grid-gap: 20px; /* Adjust the gap between cards */
+    }
+
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        width: 100%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+    }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+    .card-content {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<h1>Index</h1>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create", "Doctor")
+</p>
+
+
+<section class="max-w-xl mx-auto px-4 sm:px-6 lg:max-w-screen-xl lg:px-8 mt-20">
+    <div class="max-w-3xl mx-auto text-center prose">
+        <h2>
+            <span class="font-bold text-indigo-700">
+                Are you looking for a veterinarian ?
+            </span>
+        </h2> <p class="text-lg sm:text-xl">
+            Canada Veterinary can help you find a local vet available now through our database of thousands
+            of available veterinarians near you.
+            Find a veterinarian now and receive the care you need, when you need it.
+            The best local vets are found on Canada Veterinary Directory!
+        </p>
+    </div>
+</section>
+<div class="card-container">
+    @foreach (var item in Model)
+    {
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="doctor-info">
+                            <div class="doctor-image">
+                                <img src="~/images/cartoon-veterinarian.jpg" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;" class="rounded-circle" />
+                            </div>
+                            <div class="doctor-details">
+                                <h1 style ="font-size: 20px;">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Lastname)</h1>
+                                <h1 style="color: gray; font-size: 12px;">Veterinarian</h1>
+                                <h1 style="color: gray; font-size: 12px;">Licensed in @Html.DisplayFor(modelItem => item.Location)</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="doctor-price">
+                            <p>Starting at</p> 
+                            <h3 class="price" style="color: blue; font-size: 50px;">$@Html.DisplayFor(modelItem => item.Price)</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-links">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "edit-link", data_id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "details-link", data_id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "delete-link", data_id = item.Id })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

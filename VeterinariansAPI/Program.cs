@@ -20,6 +20,7 @@ namespace VeterinariansAPI
             builder.Services.AddDbContext<Comp306ProjectContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("")));
 
             builder.Services.AddScoped<IVeterinariansRepository, VeterinarianRepository>();
+            builder.Services.AddScoped<IDoctorsRepository, DoctorRepository>();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             var app = builder.Build();
