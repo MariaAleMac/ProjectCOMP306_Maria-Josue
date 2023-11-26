@@ -7,7 +7,7 @@ using VeterinariansAPI.Services;
 
 namespace VeterinariansAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class VeterinariansController : Controller
     {
 
@@ -52,9 +52,16 @@ namespace VeterinariansAPI.Controllers
 
         // PUT: VeterinariansController/Update
         [HttpPut]
-        [Route("/api/Veterinarian")]
-        public ActionResult Update([FromBody] Veterinarian veterinarian)
+        [Route("/api/Veterinarian/{id}")]
+        public ActionResult Update(int id, [FromBody] Veterinarian veterinarian)
         {
+
+            if (id != veterinarian.Id)
+            {
+                return BadRequest("Invalid doctor ID");
+            }
+
+
             _veterinariansRepository.UpdateVeterinarian(veterinarian);
             return Ok();
         }

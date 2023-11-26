@@ -17,7 +17,7 @@ namespace VeterinariansAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<Comp306ProjectContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("")));
+            builder.Services.AddDbContext<Comp306ProjectContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("connection2RDS")));
 
             builder.Services.AddScoped<IVeterinariansRepository, VeterinarianRepository>();
             builder.Services.AddScoped<IDoctorsRepository, DoctorRepository>();

@@ -4,7 +4,16 @@
 
 @{
     @model IEnumerable<Veterinarian>
+     ViewData["Title"] = "Index";
 }
+
+
+<style>
+    .index {
+       z-index: 2;
+       position: relative;
+    }
+</style>
 
 <!-- Blog preview section-->
 <section class="py-5">
@@ -18,35 +27,30 @@
             </div>
         </div>
         <div class="row justify-content-end mb-3">
-            <a class="btn btn-primary btn-lg px-4 me-sm-3 w-25" href="/Veterinarian/Create">Create</a>
+           <p>
+               @Html.ActionLink("Create New", "Create", "Veterinarian")
+           </p>
         </div>
         <div class="row gx-5">
             @foreach (Veterinarian item in Model)
 		        {
                 <div class="col-lg-4 mb-5">
-                    <div href="/Veterinarian/Details/@item.Id" class="card h-100 shadow border-0">
-                        @*<img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />*@
+                    <div class="card h-100 shadow border-0">
                         <div class="card-body p-4">
                             <div class="flex">
                                 <div class="badge bg-primary bg-gradient rounded-pill mb-2">@item.Rate</div>
                                 <div class="badge bg-primary bg-gradient rounded-pill mb-2 ml-2">@item.City</div>
                             </div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">@item.Name</h5></a>
+                            <a class="text-decoration-none link-dark stretched-link"><h5 class="card-title mb-3">@item.Name</h5></a>
                             <p class="card-text mb-0">@item.Keywords</p>
                             <p class="card-text mb-0 text-success">Address: @item.Address</p>
                             <p class="card-text mb-0 text-success">Phone: @item.Phone</p>
-                        </div>
-                        @*<div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                            <div class="d-flex align-items-end justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                    <div class="small">
-                                        <div class="fw-bold">Kelly Rowan</div>
-                                        <div class="text-muted">March 12, 2023 &middot; 6 min read</div>
-                                    </div>
-                                </div>
+                            <div class="col-md-12">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "index", data_id = item.Id }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "index", data_id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "index", data_id = item.Id })
                             </div>
-                        </div>*@
+                        </div>
                     </div>
                 </div>
             }

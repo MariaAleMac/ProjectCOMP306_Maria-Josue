@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
 using VeterinaryDirectoryWebApp.Models;
 using VeterinaryDirectoryWebApp.Services;
 
@@ -79,44 +80,88 @@ namespace VeterinaryDirectoryWebApp.Controllers
         }
 
         // GET: VeterinarianController/Edit/5
-        public ActionResult Edit(int id)
+        public async  Task<ActionResult> Edit(int id)
         {
-            return View();
+            HttpResponseMessage response = await _client.client.GetAsync("/api/Veterinarian/" + id);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                var vet = JsonConvert.DeserializeObject<Veterinarian>(data);
+                return View(vet);
+            }
+
+            return NotFound();
         }
 
         // POST: VeterinarianController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, [Bind("Id,Name,Rate,Address,Schedule,Phone,Keywords,City")] Veterinarian veterinarian)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var content = new StringContent(JsonConvert.SerializeObject(veterinarian), System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await _client.client.PutAsync("/api/Veterinarian/" + id, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                Console.WriteLine(response.StatusCode + " " +response.RequestMessage);
+
+                ModelState.AddModelError(string.Empty, "Failed to update the veterinarian.");
+                return View(veterinarian);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                // Log or handle the exception
+                ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
+                return View(veterinarian);
             }
         }
 
         // GET: VeterinarianController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            HttpResponseMessage response = await _client.client.GetAsync("/api/Veterinarian/" + id);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                var vet = JsonConvert.DeserializeObject<Veterinarian>(data);
+                return View(vet);
+            }
+
+            return NotFound();
         }
 
         // POST: VeterinarianController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                HttpResponseMessage response = await _client.client.DeleteAsync("/api/Veterinarian/" + id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return StatusCode((int)response.StatusCode);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return StatusCode(500, "An error occurred: " + ex.Message);
             }
         }
     }
