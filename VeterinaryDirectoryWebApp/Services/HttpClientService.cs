@@ -5,7 +5,8 @@ namespace VeterinaryDirectoryWebApp.Services
     public class HttpClientService
     {
         //Hosted web API REST Service base url
-        private static string Baseurl = "https://localhost:7203";
+        // private static string Baseurl = "https://localhost:32768";
+        private static string Baseurl = "https://34.144.192.118.nip.io";
 
         public HttpClient client = new HttpClient();
         public HttpClientService() {

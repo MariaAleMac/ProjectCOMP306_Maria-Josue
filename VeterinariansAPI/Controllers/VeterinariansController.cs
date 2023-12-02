@@ -1,6 +1,5 @@
 ﻿using _301290835_Maria_Josue_3013473439_Project.Models;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VeterinariansAPI.DTO;
 using VeterinariansAPI.Services;

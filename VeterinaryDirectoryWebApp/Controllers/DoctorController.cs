@@ -3,22 +3,14 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Text;
 using VeterinaryDirectoryWebApp.Models;
+using VeterinaryDirectoryWebApp.Services;
 
 namespace VeterinaryDirectoryWebApp.Controllers
 {
     public class DoctorController : Controller
     {
 
-        Uri baseAddress = new Uri("https://localhost:7203/api/");
-        private readonly HttpClient _client;
-
-        public DoctorController() 
-        {
-        
-            _client = new HttpClient();
-            _client.BaseAddress = baseAddress;
-
-        }
+        HttpClientService _client = new HttpClientService();
 
         [HttpGet]
         public IActionResult Index()
@@ -26,7 +18,7 @@ namespace VeterinaryDirectoryWebApp.Controllers
             List<DoctorViewModel> doctorList = new List<DoctorViewModel>();
             try
             {
-                HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "AllDoctors").Result;
+                HttpResponseMessage response = _client.client.GetAsync("/proxy-vets/api/AllDoctors").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     string data = response.Content.ReadAsStringAsync().Result;
@@ -47,7 +39,7 @@ namespace VeterinaryDirectoryWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "Doctor/" + id);
+            HttpResponseMessage response = await _client.client.GetAsync("/proxy-vets/api/Doctor/" + id);
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
@@ -67,25 +59,13 @@ namespace VeterinaryDirectoryWebApp.Controllers
 
         // POST: Create a new doctor
         [HttpPost]
-        public async Task<IActionResult> Create(DoctorViewModel doctor)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(Doctor doctor)
         {
             try
             {
-                string data = JsonConvert.SerializeObject(doctor);
-                StringContent content = new StringContent(data,Encoding.UTF8, "application/json");
-                //var content = new StringContent(JsonConvert.SerializeObject(doctor), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response =  _client.PostAsync(_client.BaseAddress + "Doctor", content).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    // If the response is not successful, handle the error
-                    ModelState.AddModelError(string.Empty, "Failed to create the doctor.");
-                    return View(doctor);
-                }
+                using HttpResponseMessage response = await _client.client.PostAsJsonAsync("/proxy-vets/api/Doctor", doctor);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -100,7 +80,7 @@ namespace VeterinaryDirectoryWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "Doctor/" + id);
+            HttpResponseMessage response = await _client.client.GetAsync("/proxy-vets/api/Doctor/" + id);
 
             if (response.IsSuccessStatusCode)
             {
@@ -114,12 +94,13 @@ namespace VeterinaryDirectoryWebApp.Controllers
 
         // POST: Update existing doctor
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, DoctorViewModel doctor)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int id, DoctorViewModel doctor)
         {
             try
             {
                 var content = new StringContent(JsonConvert.SerializeObject(doctor), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _client.PutAsync(_client.BaseAddress + "Doctor/" + id, content);
+                HttpResponseMessage response = await _client.client.PutAsync("/proxy-vets/api/Doctor/" + id, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -138,26 +119,27 @@ namespace VeterinaryDirectoryWebApp.Controllers
         }
 
 
-        // PUT: Update existing doctor
-        [HttpPut]
-        public async Task<IActionResult> Update(int id, DoctorViewModel doctor)
-        {
-            var content = new StringContent(JsonConvert.SerializeObject(doctor), System.Text.Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await _client.PutAsync(_client.BaseAddress + "Doctor/" + id, content);
+        //PUT: Update existing doctor
+        //[HttpPut]
+        //[ValidateAntiForgeryToken]
+        // public async Task<ActionResult> Update(int id, DoctorViewModel doctor)
+        // {
+        //     var content = new StringContent(JsonConvert.SerializeObject(doctor), System.Text.Encoding.UTF8, "application/json");
+        //     HttpResponseMessage response = await _client.client.PutAsync("/api/Doctor/" + id, content);
 
-            if (response.IsSuccessStatusCode)
-            {
-                return RedirectToAction(nameof(Index));
-            }
+        //     if (response.IsSuccessStatusCode)
+        //     {
+        //         return RedirectToAction(nameof(Index));
+        //     }
 
-            return View(doctor);
-        }
+        //     return View(doctor);
+        // }
 
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "Doctor/" + id);
+            HttpResponseMessage response = await _client.client.GetAsync("/proxy-vets/api/Doctor/" + id);
 
             if (response.IsSuccessStatusCode)
             {
@@ -175,7 +157,7 @@ namespace VeterinaryDirectoryWebApp.Controllers
         {
             try
             {
-                HttpResponseMessage response = await _client.DeleteAsync(_client.BaseAddress + "Doctor/" + id);
+                HttpResponseMessage response = await _client.client.DeleteAsync("/proxy-vets/api/Doctor/" + id);
 
                 if (response.IsSuccessStatusCode)
                 {

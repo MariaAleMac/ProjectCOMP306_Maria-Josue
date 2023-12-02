@@ -38,24 +38,19 @@ namespace VeterinariansAPI.Services
 
         public void CreateDoctor(Doctor doctor)
         {
+            Console.WriteLine("HEREEEEEE-----"+ doctor.Gender + " " + doctor.Name);
             using (var myContext = new Comp306ProjectContext())
             {
-                myContext.Doctors.Add(doctor);
-                myContext.SaveChanges();
+                _context.Doctors.Add(doctor);
+                _context.SaveChanges();
             }
         }
         public void UpdateDoctor(Doctor doctor)
         {
             using (var myContext = new Comp306ProjectContext())
             {
-                var existingDoctor = myContext.Doctors.Find(doctor.Id);
-                if (existingDoctor != null)
-                {
-                    myContext.Entry(existingDoctor).State = EntityState.Detached; // Detach existing entity
-                }
-
-                myContext.Doctors.Update(doctor); // Attach and update the entity
-                myContext.SaveChanges();
+                _context.Doctors.Update(doctor); // Attach and update the entity
+                _context.SaveChanges();
             }
         }
 

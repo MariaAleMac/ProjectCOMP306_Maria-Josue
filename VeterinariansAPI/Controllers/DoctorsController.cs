@@ -59,31 +59,31 @@ namespace VeterinariansAPI.Controllers
         }
 
 
-        // PUT: DoctorsController/Update
-        [HttpPut]
-        [Route("/api/Doctor")]
-        public ActionResult Update([FromBody] Doctor doctor)
-        {
-            _doctorsRepository.UpdateDoctor(doctor);
-            return Ok();
-        }
+        //// PUT: DoctorsController/Update
+        //[HttpPut]
+        //[Route("/api/Doctor")]
+        //public ActionResult Update([FromBody] Doctor doctor)
+        //{
+        //    _doctorsRepository.UpdateDoctor(doctor);
+        //    return Ok();
+        //}
 
 
         // GET: DoctorsController/Edit
         [HttpPut]
         [Route("/api/Doctor/{id}")]
-        public ActionResult Edit(int id, [FromBody] Doctor doctor)
+        public async Task<ActionResult> Edit(int id, [FromBody]Doctor doctor)
         {
             if (id != doctor.Id)
             {
                 return BadRequest("Invalid doctor ID");
             }
 
-            var existingDoctor = _doctorsRepository.GetDoctorById(id);
-            if (existingDoctor == null)
-            {
-                return NotFound("Doctor not found");
-            }
+            //var existingDoctor = await _doctorsRepository.GetDoctorById(id);
+            //if (existingDoctor == null)
+            //{
+            //    return NotFound("Doctor not found");
+            //}
 
             _doctorsRepository.UpdateDoctor(doctor);
             return Ok("Doctor updated successfully");

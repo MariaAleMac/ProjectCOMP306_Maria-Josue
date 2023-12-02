@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "301290835(Maria&Josue)30134
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeterinariansAPI", "VeterinariansAPI\VeterinariansAPI.csproj", "{C9D326B5-1433-48C7-9C84-3EBF20DC41E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeterinaryDirectoryWebApp", "VeterinaryDirectoryWebApp\VeterinaryDirectoryWebApp.csproj", "{C88517F1-0BCA-4636-83D5-E4D132A5CDCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VeterinaryDirectoryWebApp", "VeterinaryDirectoryWebApp\VeterinaryDirectoryWebApp.csproj", "{C88517F1-0BCA-4636-83D5-E4D132A5CDCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,7 +18,6 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{ADE0097A-83B6-4826-A059-D5F9E4E90292}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADE0097A-83B6-4826-A059-D5F9E4E90292}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADE0097A-83B6-4826-A059-D5F9E4E90292}.Debug|ARM32.ActiveCfg = Debug|ARM32
 		{ADE0097A-83B6-4826-A059-D5F9E4E90292}.Debug|ARM32.Build.0 = Debug|ARM32
 		{ADE0097A-83B6-4826-A059-D5F9E4E90292}.Release|Any CPU.ActiveCfg = Release|Any CPU

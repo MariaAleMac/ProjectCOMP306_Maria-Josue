@@ -15,12 +15,10 @@ namespace VeterinaryDirectoryWebApp.Controllers
         // GET: VeterinarianController
         public async Task<ActionResult> Index()
         {
-            Console.WriteLine("HERE");
-            using HttpResponseMessage response = await _client.client.GetAsync("/api/AllVeterinarians");
+            using HttpResponseMessage response = await _client.client.GetAsync("/proxy-vets/api/AllVeterinarians");
 
             if (response is null)
             {
-                Console.WriteLine("AGAIN");
                 return View();
             }
 
@@ -39,7 +37,7 @@ namespace VeterinaryDirectoryWebApp.Controllers
         // GET: VeterinarianController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            using HttpResponseMessage response = await _client.client.GetAsync("/api/Veterinarian/"+id);
+            using HttpResponseMessage response = await _client.client.GetAsync("/proxy-vets/api/Veterinarian/" + id);
 
             if (response is null)
             {
@@ -68,13 +66,12 @@ namespace VeterinaryDirectoryWebApp.Controllers
         {
             try
             {
-                string json = JsonConvert.SerializeObject(veterinarian);
-                HttpContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json"); ;
-                using HttpResponseMessage response = await _client.client.PostAsJsonAsync("/api/Veterinarian", veterinarian);
+                using HttpResponseMessage response = await _client.client.PostAsJsonAsync("/proxy-vets/api/Veterinarian", veterinarian);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return View();
             }
         }
@@ -82,7 +79,7 @@ namespace VeterinaryDirectoryWebApp.Controllers
         // GET: VeterinarianController/Edit/5
         public async  Task<ActionResult> Edit(int id)
         {
-            HttpResponseMessage response = await _client.client.GetAsync("/api/Veterinarian/" + id);
+            HttpResponseMessage response = await _client.client.GetAsync("/proxy-vets/api/Veterinarian/" + id);
 
             if (response.IsSuccessStatusCode)
             {
@@ -102,7 +99,7 @@ namespace VeterinaryDirectoryWebApp.Controllers
             try
             {
                 var content = new StringContent(JsonConvert.SerializeObject(veterinarian), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await _client.client.PutAsync("/api/Veterinarian/" + id, content);
+                HttpResponseMessage response = await _client.client.PutAsync("/proxy-vets/api/Veterinarian/" + id, content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -125,7 +122,7 @@ namespace VeterinaryDirectoryWebApp.Controllers
         // GET: VeterinarianController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            HttpResponseMessage response = await _client.client.GetAsync("/api/Veterinarian/" + id);
+            HttpResponseMessage response = await _client.client.GetAsync("/proxy-vets/api/Veterinarian/" + id);
 
             if (response.IsSuccessStatusCode)
             {
@@ -144,7 +141,7 @@ namespace VeterinaryDirectoryWebApp.Controllers
         {
             try
             {
-                HttpResponseMessage response = await _client.client.DeleteAsync("/api/Veterinarian/" + id);
+                HttpResponseMessage response = await _client.client.DeleteAsync("/proxy-vets/api/Veterinarian/" + id);
 
                 if (response.IsSuccessStatusCode)
                 {

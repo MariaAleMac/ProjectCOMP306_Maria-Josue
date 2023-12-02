@@ -41,8 +41,8 @@ namespace VeterinariansAPI.Services
             //_ = _context.Veterinarians.Add(veterinarian);
             using (var myContext = new Comp306ProjectContext())
             {
-                myContext.Veterinarians.Add(veterinarian);
-                myContext.SaveChanges();
+                _context.Veterinarians.Add(veterinarian);
+                _context.SaveChanges();
             }
         }
 
